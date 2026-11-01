@@ -194,3 +194,7 @@ python axf_inspector.py --version
 - 证据优先：每个数字都标注来源（CFI、前言扫描、节属性、重定位表、DWARF DIE），不确定的模型会明确标注。
 - 天生只读：不修改 `.axf`、源码与工程文件；无网络访问；除 stdout 外无输出。
 - 参数化解耦：不假设芯片型号、编译器、段布局或 RTOS；可选的审计清单接受任意执行模型。
+
+## 许可证
+
+MIT——见 [LICENSE](LICENSE)。Copyright (c) 2026 wimi996123。

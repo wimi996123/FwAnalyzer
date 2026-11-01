@@ -194,3 +194,7 @@ Tests cover stack-budget arithmetic, model boundaries, evidence handling and the
 - Evidence over guesswork: every number carries its source (CFI, prologue scan, section flags, relocation table, DWARF DIE), and uncertain models are labelled as such.
 - Read-only by construction: the `.axf`, sources and project files are never modified; there is no network access and no output besides stdout.
 - Decoupled by design: nothing assumes a chip model, compiler, section layout or RTOS. The optional audit manifest accepts any execution model.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Copyright (c) 2026 wimi996123.
