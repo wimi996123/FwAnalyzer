@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Tool state and caches
+.callanalysis_cache/
+*.pickle
+.keil-tool/
+
+# Firmware build artifacts — the tool reads them, the repo never commits them
+*.axf
+*.elf
+*.o
+*.hex
+*.bin
+*.map
+*.lst
+*.dep
+build_logs/
+output/
+Objects/
+Listings/
+
+# Keil project/user state
+*.uvguix.*
+*.uvoptx
+*.bak
+*.scvd
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+.claude/settings.local.json

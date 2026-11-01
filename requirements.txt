@@ -1,0 +1,11 @@
+# AxFInspector — binary-level firmware analysis (.axf / ELF + DWARF)
+# Required: ELF/DWARF parsing
+pyelftools>=0.29
+
+# Optional: disassembly for --disasm; without it the tool falls back to a hex dump
+capstone>=4.0
+
+# Notes
+# - Python >= 3.10 (the tool uses PEP 604 type unions at runtime).
+# - No compiler, Keil, LLVM or libclang installation is required: the tool only
+#   reads a firmware .axf that was built elsewhere.

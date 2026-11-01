@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "axf-analyzer": {
+      "command": "python",
+      "args": ["${CLAUDE_PROJECT_DIR}/mcp_server.py"]
+    }
+  }
+}

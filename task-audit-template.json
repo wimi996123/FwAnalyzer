@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "allocation_policy": {
+    "unit_name": "target stack allocation unit",
+    "unit_bytes": 1,
+    "minimum_units": 0,
+    "granularity_units": 1
+  },
+  "safety_factor": 1.5,
+  "indirect_penalty_bytes": 0,
+  "context": {
+    "bytes": 0,
+    "evidence": "Replace with evidence from the selected architecture, ABI, execution model (bare-metal, RTOS, coroutine or other), exception model, and lazy/eager floating-point policy. Zero means not included, not zero cost."
+  },
+  "inventory_notes": [
+    "State how entry points and allocation values were discovered.",
+    "State build identity and any excluded images, configurations, or dynamically created entries.",
+    "List unresolved indirect calls, callbacks, assembly, recursion, interrupts, and runtime-only behavior."
+  ],
+  "tasks": [
+    {
+      "entry": "replace_with_entry_symbol",
+      "allocated_units": 1,
+      "allocation": {
+        "file": "replace/with/configuration/source",
+        "symbol": "replace_with_allocation_symbol"
+      },
+      "callback_paths": [
+        {
+          "path": [
+            "replace_with_entry_symbol",
+            "replace_with_dispatcher",
+            "replace_with_callback"
+          ],
+          "evidence": "Replace with a registration table, pointer assignment, static object table, linker record, or other traceable evidence."
+        }
+      ]
+    }
+  ]
+}
