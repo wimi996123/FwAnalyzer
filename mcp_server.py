@@ -475,20 +475,36 @@ _MAX_CHARS = {
     "description": "Truncate text output to this many characters (default 20000, max 200000).",
 }
 
+# MCP tool annotations (schema: ToolAnnotations). Every tool in this server only
+# reads an existing image (plus, for axf_audit_tasks, an existing manifest) and
+# never writes to the image, the sources or the project. All four hints are
+# declared explicitly as booleans: hosts use them to warn before invocation, and
+# tool directories (e.g. OpenAI) reject tools that omit any of them or send a
+# non-boolean value.
+_READ_ONLY_ANNOTATIONS: dict[str, bool] = {
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+}
+
 TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_file_info",
         "description": "Identify the image: absolute path, byte size and SHA256. Quote the hash with any finding.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {"type": "object", "properties": {"axf": _AXF}, "required": ["axf"], "additionalProperties": False},
     },
     {
         "name": "axf_build_info",
         "description": "Build/toolchain facts: architecture, CPU, FPU/float ABI, alignment, compiler, optimization level.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {"type": "object", "properties": {"axf": _AXF}, "required": ["axf"], "additionalProperties": False},
     },
     {
         "name": "axf_symbols_top",
         "description": "Function/data objects ranked by size. Use region=ram for real RAM usage (excludes .rodata constants).",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -504,6 +520,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_unused",
         "description": "Candidates for unreferenced static objects (best effort). Not a safe-to-delete list.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -519,11 +536,13 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_segments",
         "description": "Program headers / segment map: type, vaddr, paddr, file/memory size and flags.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {"type": "object", "properties": {"axf": _AXF}, "required": ["axf"], "additionalProperties": False},
     },
     {
         "name": "axf_symbol_addr",
         "description": "Absolute address, size, type and section of one symbol.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {"axf": _AXF, "name": {"type": "string", "description": "Symbol name."}},
@@ -534,6 +553,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_checksum",
         "description": "SHA256 of the requested sections (default .text,.rodata,.data) for firmware version comparison.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -548,6 +568,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_addr2line",
         "description": "Map a crash/PC address (hex, e.g. 0x08001234) to source file:line, expanding the inline chain.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -561,6 +582,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_disasm",
         "description": "Disassemble one function; mixed=true interleaves source lines. Hex dump when capstone is absent.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -576,6 +598,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_struct",
         "description": "Real DWARF memory layout of a struct/union: member offsets, types, bitfields, total size.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -590,6 +613,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_callgraph",
         "description": "Static call tree from ELF relocations (direct calls only; no pointers, tail calls, inlined or dead code).",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -605,6 +629,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_stackframe",
         "description": "Modelled stack frame of one function (DWARF CFI first, Thumb prologue-scan fallback) with its evidence source.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {"axf": _AXF, "function": {"type": "string", "description": "Function/symbol name."}},
@@ -615,6 +640,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_stackdepth",
         "description": "Modelled stack depth along the deepest call chain from ANY entry symbol (main, ISR, task function, test). No RTOS assumptions.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -632,6 +658,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "axf_audit_tasks",
         "description": "Optional budget audit: compare the model against a project-owned manifest (schema_version=2) of entries and allocations.",
+        "annotations": _READ_ONLY_ANNOTATIONS,
         "inputSchema": {
             "type": "object",
             "properties": {

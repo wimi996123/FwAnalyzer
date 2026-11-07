@@ -139,6 +139,8 @@ python axf_inspector.py --axf firmware.axf --audit-tasks my-budget.json --projec
 
 `mcp_server.py` 是零依赖的 stdio 服务器，暴露 14 个只读工具：`axf_file_info`、`axf_build_info`、`axf_symbols_top`、`axf_unused`、`axf_segments`、`axf_symbol_addr`、`axf_checksum`、`axf_addr2line`、`axf_disasm`、`axf_struct`、`axf_callgraph`、`axf_stackframe`、`axf_stackdepth`、`axf_audit_tasks`。解析结果按 (路径, 大小, mtime) 缓存，一次多步调查只解析一遍 DWARF。
 
+每个工具都显式声明了全部四个 MCP 注解——`readOnlyHint: true`、`destructiveHint: false`、`idempotentHint: true`、`openWorldHint: false`——宿主可在调用前提示风险，工具目录（如 OpenAI）也能通过校验。
+
 | 宿主 | 配置 |
 |---|---|
 | Claude Code | 仓库自带 `.mcp.json`；或 `claude mcp add axf-analyzer -- python /abs/path/mcp_server.py` |

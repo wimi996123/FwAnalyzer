@@ -139,6 +139,8 @@ Two ways, same engine — the MCP server calls `axf_inspector.py` directly, so C
 
 `mcp_server.py` is a zero-dependency stdio server exposing 14 read-only tools: `axf_file_info`, `axf_build_info`, `axf_symbols_top`, `axf_unused`, `axf_segments`, `axf_symbol_addr`, `axf_checksum`, `axf_addr2line`, `axf_disasm`, `axf_struct`, `axf_callgraph`, `axf_stackframe`, `axf_stackdepth`, `axf_audit_tasks`. The parsed image is cached by (path, size, mtime), so a multi-step investigation parses DWARF once instead of once per command.
 
+Every tool declares all four MCP annotations — `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false` — so hosts can warn before invoking and tool directories (e.g. OpenAI) accept the manifest.
+
 | Host | Setup |
 |---|---|
 | Claude Code | project `.mcp.json` is included; or `claude mcp add axf-analyzer -- python /abs/path/mcp_server.py` |

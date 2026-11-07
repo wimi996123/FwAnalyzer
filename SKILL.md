@@ -65,7 +65,7 @@ The same engine is exposed two ways; MCP calls `axf_inspector.py` directly, so r
 | `axf_stackdepth` | `--stackdepth` |
 | `axf_audit_tasks` | `--audit-tasks` |
 
-Every tool takes `axf` (the image path) and an optional `max_chars` for long text. Failures are MCP tool errors (`isError: true`) with stable codes: `FILE_NOT_FOUND`, `BAD_ELF`, `SYMBOL_NOT_FOUND`, `NO_SOURCE_INFO`, `FUNCTION_NOT_FOUND`, `STRUCT_NOT_FOUND`, `BAD_ARGUMENT`, `BAD_MANIFEST`, `INTERNAL`.
+Every tool takes `axf` (the image path) and an optional `max_chars` for long text. Failures are MCP tool errors (`isError: true`) with stable codes: `FILE_NOT_FOUND`, `BAD_ELF`, `SYMBOL_NOT_FOUND`, `NO_SOURCE_INFO`, `FUNCTION_NOT_FOUND`, `STRUCT_NOT_FOUND`, `BAD_ARGUMENT`, `BAD_MANIFEST`, `INTERNAL`. Every tool declares all four MCP annotations (`readOnlyHint=true`, `destructiveHint=false`, `idempotentHint=true`, `openWorldHint=false`), matching the fact that the server never writes to the image, sources or project.
 
 **CLI (fallback).** Any agent that can run shell commands uses the commands below; `SKILL.md` stays the policy layer either way (when to use, never guess the image, `-O0`/`-Og` advice, callgraph/unused caveats).
 

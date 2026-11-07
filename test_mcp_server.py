@@ -124,6 +124,23 @@ class TransportTests(unittest.TestCase):
             self.assertEqual(tool["inputSchema"]["type"], "object")
             self.assertIn("axf", tool["inputSchema"]["properties"])
 
+    def test_every_tool_declares_all_four_annotation_hints(self) -> None:
+        """Tool directories reject tools whose hints are missing or non-boolean."""
+        responses = _run_messages([INITIALIZE, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}])
+        tools = responses[1]["result"]["tools"]
+        self.assertEqual(len(tools), 14)
+        for tool in tools:
+            annotations = tool.get("annotations")
+            self.assertIsInstance(annotations, dict, f"{tool['name']} declares no annotations")
+            for hint in ("readOnlyHint", "destructiveHint", "idempotentHint", "openWorldHint"):
+                self.assertIsInstance(annotations.get(hint), bool,
+                                      f"{tool['name']}.annotations.{hint} must be an explicit boolean")
+            # The whole server is read-only, so the hints must say exactly that.
+            self.assertTrue(annotations["readOnlyHint"], tool["name"])
+            self.assertFalse(annotations["destructiveHint"], tool["name"])
+            self.assertTrue(annotations["idempotentHint"], tool["name"])
+            self.assertFalse(annotations["openWorldHint"], tool["name"])
+
     def test_protocol_errors_do_not_kill_the_server(self) -> None:
         responses = _run_messages([
             INITIALIZE,
