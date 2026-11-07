@@ -1,5 +1,7 @@
 # FwAnalyzer (AxFInspector)
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/wimi996123-fwanalyzer-13u0e3?v=5ef1c17b7d99cab69e932f224a9c194b)](https://m8ven.ai/mcp/wimi996123-fwanalyzer-13u0e3?s=readme)
+
 **Read a firmware `.axf` like a debugger would: crash addresses, machine code, memory usage, struct layout, stack depth — from one ELF file, with no IDE and no build step.**
 
 [English](README.md) | [简体中文](README.zh-CN.md)
